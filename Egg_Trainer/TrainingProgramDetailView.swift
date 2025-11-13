@@ -21,18 +21,20 @@ struct TrainingProgramDetailView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     Image(program.imageName)
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .scaledToFill()
+                        .frame(width: UIScreen.main.bounds.width - 60)
                         .frame(height: 250)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-
+                        .clipped()
+                        .cornerRadius(20)
+                    
                     Text(program.title)
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
-
+                    
                     Text(program.description)
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
-
+                    
                     HStack(spacing: 15) {
                         TabButton(title: "Steps", isSelected: selectedTab == .steps) {
                             withAnimation { selectedTab = .steps }
@@ -41,8 +43,7 @@ struct TrainingProgramDetailView: View {
                             withAnimation { selectedTab = .frequency }
                         }
                     }
-                    .frame(maxWidth: .infinity)
-
+                    
                     if selectedTab == .steps {
                         StepsView(steps: program.steps)
                             .transition(.opacity)
@@ -52,6 +53,7 @@ struct TrainingProgramDetailView: View {
                     }
                 }
                 .padding()
+                .padding(.horizontal, 30)
             }
             .padding(.bottom, 90)
         }
@@ -71,4 +73,8 @@ struct TrainingProgramDetailView: View {
             }
         }
     }
+}
+
+#Preview {
+    TrainingProgramDetailView(program: TrainingProgram(title: "title", description: "descr", imageName: "", steps: [], frequency: "asda"))
 }
